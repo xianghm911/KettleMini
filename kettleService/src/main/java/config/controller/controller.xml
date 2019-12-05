@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <bean  class="com.winning.web.controller.KettleFileTreeController" path="/kft"   >
+        <method name="getKettleFileTree" path="/kft.kt" reqMethod="post" />
+    </bean>
+
+    <bean  class="com.winning.web.controller.KettleFileJobController" path="/kfj"   >
+        <method name="saveKettleFileJob" path="/saveKfj.kt" reqMethod="post" />
+        <method name="queryFileJobs" path="/queryKfj.kt" reqMethod="post" />
+        <method name="renJob" path="/renJob.kt" reqMethod="post" />
+        <method name="getLogs" path="/getLogs.kt" reqMethod="post" />
+        <method name="saveDssz" path="/saveDssz.kt" reqMethod="post" />
+        <method name="startJob" path="/startJob.kt" reqMethod="post" />
+        <method name="stopJob" path="/stopJob.kt" reqMethod="post" />
+    </bean>
+
+
+    <bean  class="com.winning.web.controller.KettleLogController" path="/klog"   >
+        <method name="getLogTree" path="/getLogTree.kt" reqMethod="post" />
+        <method name="downloadLog" path="/downloadLog.kt" reqMethod="post" />
+    </bean>
+
+</beans>

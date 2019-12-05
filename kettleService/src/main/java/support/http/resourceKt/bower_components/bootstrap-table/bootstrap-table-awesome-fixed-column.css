@@ -1,0 +1,32 @@
+.awesome-table-fixed {
+    position: absolute;
+    z-index: 999;
+    top: 0px;
+}
+
+.awesome-table-fixed .awesome-table-body {
+    position: absolute;
+    overflow: hidden;
+    background: #fff;
+}
+
+.awesome-table-fixed  .awesome-table-header table th{
+    border: 1px solid #fff
+}
+
+.awesome-table-fixed .awesome-table-body table {
+    position: relative;
+    top: 0;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.awesome-table-fixed-l {
+    left: 0px;
+}
+.awesome-table-fixed-l .awesome-table-body{
+    box-shadow: 2px -2px 10px 1px rgba(0,0,0,.1);
+}
+
+.awesome-table-fixed-r .awesome-table-body{
+    box-shadow: -2px -2px 10px 1px rgba(0,0,0,.1);
+}

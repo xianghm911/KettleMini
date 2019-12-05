@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>KETTLE工具</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link href="bower_components/bootstrap-table/bootstrap-table.css" rel="stylesheet"/>
+  <link href="bower_components/bootstrap-table/bootstrap-table-fixed-columns.css" rel="stylesheet"/>
+  <link href="bower_components/bootstrap-table/bootstrap-editable.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+  <link  rel="stylesheet" href="bower_components/layer/theme/default/layer.css?v=1.1.0">
+  <link href="bower_components/easyui/themes/bootstrap/tree.css?v=1.1.0" rel="stylesheet"/>
+  <link href="bower_components/easyui/themes/bootstrap/tooltip.css?v=1.1.0" rel="stylesheet"/>
+  <link href="bower_components/easyui/themes/bootstrap/menu.css?v=1.1.0" rel="stylesheet"/>
+  <link href="bower_components/easyui/themes/bootstrap/textbox.css?v=1.1.0" rel="stylesheet"/>
+  <link href="bower_components/easyui/themes/bootstrap/combo.css?v=1.1.0" rel="stylesheet"/>
+  <link href="bower_components/easyui/themes/bootstrap/combobox.css?v=1.1.0" rel="stylesheet"/>
+  <script src="bower_components/jquery/dist/jquery-1.9.1.js"></script>
+  <script src="bower_components/easyui/jquery.easyui.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/bootstrap-table/bootstrap-table.js"></script>
+  <script src="bower_components/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+  <script src="bower_components/bootstrap-table/bootstrap-fixed-column.js"></script>
+  <script src="bower_components/bootstrap-table/bootstrap-table-export.js"></script>
+  <script src="bower_components/bootstrap-table/tableExport.js"></script>
+  <script src="bower_components/bootstrap-table/bootstrap-table-editable.js"></script>
+  <script src="bower_components/bootstrap-table/bootstrap-editable.js"></script>
+  <script src="bower_components/layer/layer.js"></script>
+  <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+  <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <script src="dist/js/custom.js"></script>
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header class="main-header">
+    <a href="index.html" class="logo">
+      <span class="logo-mini"><b>K</b>T</span>
+      <span class="logo-lg"><b>Kettle</b>工具</span>
+    </a>
+    <nav class="navbar navbar-static-top">
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+    </nav>
+  </header>
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="active treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>菜单</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> 文本作业管理</a></li>
+            <li><a href="log.html"><i class="fa fa-circle-o"></i> 日志管理</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> 资源库作业管理（待开发）</a></li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </aside>
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        <small>文本作业管理</small>
+      </h1>
+    </section>
+    <section class="content">
+      <form id="defaultForm2" method="post" class="form-horizontal" onsubmit="return false;" style="font-size: 13px;">
+        <div class="col-md-12 both-pd7">
+          <!--搜索查询区：常为查询-->
+          <div class="box win-search-box">
+            <div class="box-header">
+              <i class="fa box-search"></i>
+              <div class="box-title">查询条件</div>
+              <div class="box-tools">
+                <button type="button" class="btn btn-default btn-sm" id="getList" onclick="queryJobs()">查询</button>
+                <button type="button" class="btn btn-default btn-sm" id="addJob">新增作业</button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <div class="col-mr">
+                    <label class="col-lg-1 col-md-2 control-label">作业名称：</label>
+                    <div class="col-lg-2 col-md-4">
+                      <div class="input-group">
+                        <input type="text" class="form-control input-sm" name="jobNameQuery"  id="jobNameQuery">
+                      </div>
+                    </div>
+                    <label class="col-lg-1 col-md-2 control-label">作业描述：</label>
+                    <div class="col-lg-2 col-md-4">
+                      <div class="input-group">
+                        <input type="text" class="form-control input-sm" name="jobDetailQuery"  id="jobDetailQuery">
+                      </div>
+                    </div>
+                    <label class="col-lg-1 col-md-2 control-label">作业状态：</label>
+                    <div class="col-lg-2 col-md-4">
+                      <div class="input-group">
+                        <select class="form-control input-sm" id="statusQuery" name="statusQuery" >
+                          <option value="">--全部--</option>
+                          <option value="2">运行中</option>
+                          <option value="1">停止中</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+        <div class="col-md-12 both-pd7">
+          <div class="tab-pane fade in active">
+            <div class="box win-box">
+              <div class="box-header">
+                <i class="fa box-search"></i>
+                <div class="box-title">作业明细</div>
+                <div class="box-tools">
+                  <button type="button" class="btn btn-default btn-sm"  id="zsdsq">设置定时器</button>
+                  <button type="button" class="btn btn-default btn-sm"  id="startJob">启动</button>
+                  <button type="button" class="btn btn-default btn-sm"  id="stopJob">停止</button>
+                  <button type="button" class="btn btn-default btn-sm"  id="yxyc">运行一次</button>
+                  <button type="button" class="btn btn-default btn-sm"  id="ckrz">查看日志</button>
+                </div>
+              </div>
+            <div class="box-body">
+                <table class="table-container" id="data_tables">
+
+                </table>
+            </div>
+            </div>
+          </div>
+        </div>
+    </section>
+  </div>
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 1.0.0
+    </div>
+   <!-- <strong>Copyright &copy; 2018-2019 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    reserved.-->
+  </footer>
+  <div class="control-sidebar-bg"></div>
+</div>
+<script type="text/template" id="popContent">
+      <div class="panel-body">
+              <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-lg-2 col-md-2 control-label">作业名称：</label>
+                    <div class="col-lg-10 col-md-10">
+                        <input type="text" class="form-control" name="jobName" id="jobName"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-lg-2 col-md-3 control-label">作业描述：</label>
+                  <div class="col-lg-10 col-md-10">
+                    <input type="text" class="form-control" name="jobDetail" id="jobDetail"/>
+                  </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-lg-2 col-md-3 control-label">作业路径：</label>
+                    <div class="col-lg-10 col-md-10">
+                      <div class="input-group  inline">
+                        <input type="text" class="form-control" name="zylj" id="zylj" readonly/>
+                        <button type="button" class="btn btn-default btn-sm" id="1" onclick="getKettleFile()">选择kettle文件</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+      </div>
+</script>
+<script type="text/template" id="getKettleFileTree">
+  <div class="box-body">
+    <div style="height:350px;overflow: auto;">
+      <div style="border: 0px;">
+        <ul id="kettleFileTree"></ul>
+      </div>
+    </div>
+  </div>
+</script>
+
+
+<script type="text/template" id="getLogs">
+    <div class="box-body">
+        <div style="height:450px;overflow: auto;" id="seeLogs">
+
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="dssz">
+    <form id="dsszForm">
+    <div class="panel-body" id="szdsrw">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-lg-4 col-md-4 control-label">类型：</label>
+                <div class="col-lg-8 col-md-8">
+                    <select class="form-control input-sm" id="lx" name="lx" onchange="changeZqlx(this.value)"  >
+                        <option value="1">时间间隔</option>
+                        <option value="2">天</option>
+                        <option value="3">周</option>
+                        <option value="4">月</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-4 col-md-4 control-label">以秒计算间隔：</label>
+                <div class="col-lg-8 col-md-8">
+                    <input readonly id="msjg" name="msjg" value="0" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"  type="number"class="form-control" >
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-4 col-md-4 control-label">以分钟计算间隔：</label>
+                <div class="col-lg-8 col-md-8">
+                    <input readonly id="fzsjg" name="fzsjg" value="0"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"  type="number"class="form-control" >
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-4 col-md-4 control-label">每天：</label>
+                <div class="col-lg-8 col-md-8 ">
+                    <input readonly type="number" class="form-control" style="display: inline;width:50%;float:left" id="xss" name="xss"  value="0"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"  
+                               onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" />
+                    <input readonly type="number" class="form-control" style="display: inline;width:50%;float:left"  id="ms" name="ms"  value="0"  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"  
+                               onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}" />
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-4 col-md-4 control-label">每周：</label>
+                <div class="col-lg-8 col-md-8 ">
+                    <select class="form-control input-sm" id="zs"  name="zs"   readonly >
+                        <option value="1">星期一</option>
+                        <option value="2">星期二</option>
+                        <option value="3">星期三</option>
+                        <option value="4">星期四</option>
+                        <option value="5">星期五</option>
+                        <option value="6">星期六</option>
+                        <option value="7">星期天</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-lg-4 col-md-4 control-label">每月：</label>
+                <div class="col-lg-8 col-md-8 ">
+                    <input  id="ys" name="ys" value="1"  readonly  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"  type="number"class="form-control" >
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</script>
+
+<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<script src="dist/js/adminlte.js"></script>
+<script src="dist/js/demo.js"></script>
+<script>
+  var resultTable;
+
+  function changeZqlx(lxVal) {
+      $("#szdsrw").find("input").attr("readonly",true);
+      $("#zs").attr("readonly",true);
+      if(lxVal == "1"){
+          $("#msjg").attr("readonly",false);
+          $("#fzsjg").attr("readonly",false);
+      }
+      if(lxVal == "2"){
+          $("#xss").attr("readonly",false);
+          $("#ms").attr("readonly",false);
+      }
+      if(lxVal == "3"){
+          $("#xss").attr("readonly",false);
+          $("#ms").attr("readonly",false);
+          $("#zs").attr("readonly",false);
+      }
+      if(lxVal == "4"){
+          $("#xss").attr("readonly",false);
+          $("#ms").attr("readonly",false);
+          $("#ys").attr("readonly",false);
+      }
+  }
+
+  $(function () {
+      $("#startJob").click(function () {
+          var index =  resultTable.find('tr.success').data('index');//获得选中的行的id
+          if(index != null){
+              var data2 =resultTable.bootstrapTable('getData', true);
+              var data = data2[index];
+              if(data.status == '2'){
+                  layer.msg('该任务已启动！', {icon: 5});
+                  return;
+              }
+              if(data.quartzJson != "" &&  data.quartzJson != null &&  data.quartzJson != undefined){
+                  var index_load = layer.load(1);
+                  $.ajax({
+                      url: 'kfj/startJob.kt',
+                      type: 'POST',
+                      dataType: 'json',
+                      data: {id:data.id,quartzJson:data.quartzJson,jobPath:data.jobPath}
+                  }).done(function (dataRe) {
+                      layer.close(index_load);
+                      if(dataRe.ResultCode == '1'){
+                          layer.msg(dataRe.Content, {icon: 1});
+                          data.status = "2";
+                          resultTable.bootstrapTable('updateRow', {index: index, row: data});
+                          $("#data_tables").find("tbody>tr").eq(index).addClass("success")
+                      }else{
+                          layer.msg(dataRe.Content, {icon: 5});
+                      }
+                  }).fail(function () {
+                      layer.close(index_load);
+                  }).always(function () {
+                      layer.close(index_load);
+                  });
+              }else{
+                  layer.msg('请配置定时时间！', {icon: 5});
+              }
+          }else{
+              layer.msg('请选取一条任务！', {icon: 5});
+          }
+      })
+
+
+      $("#stopJob").click(function () {
+          var index =  resultTable.find('tr.success').data('index');//获得选中的行的id
+          if(index != null){
+              var data2 =resultTable.bootstrapTable('getData', true);
+              var data = data2[index];
+              if(data.status == '1'){
+                  layer.msg('该任务已停用！', {icon: 5});
+                  return;
+              }
+              if(data.quartzJson != "" &&  data.quartzJson != null &&  data.quartzJson != undefined){
+                  var index_load = layer.load(1);
+                  $.ajax({
+                      url: 'kfj/stopJob.kt',
+                      type: 'POST',
+                      dataType: 'json',
+                      data: {id:data.id}
+                  }).done(function (dataRe) {
+                      layer.close(index_load);
+                      if(dataRe.ResultCode == '1'){
+                          layer.msg(dataRe.Content, {icon: 1});
+                          data.status = "1";
+                          resultTable.bootstrapTable('updateRow', {index: index, row: data});
+                          $("#data_tables").find("tbody>tr").eq(index).addClass("success")
+                      }else{
+                          layer.msg(dataRe.Content, {icon: 5});
+                      }
+                  }).fail(function () {
+                      layer.close(index_load);
+                  }).always(function () {
+                      layer.close(index_load);
+                  });
+              }else{
+                  layer.msg('请配置定时时间！', {icon: 5});
+              }
+          }else{
+              layer.msg('请选取一条任务！', {icon: 5});
+          }
+      })
+
+
+
+      $("#zsdsq").click(function () {
+          var index =  resultTable.find('tr.success').data('index');//获得选中的行的id
+          if(index != null){
+              var data2 =resultTable.bootstrapTable('getData', true);
+              var data = data2[index];
+              layer.open({
+                  title: '定时设置',
+                  type: 1,
+                  area: ['500px', '500px'],
+                  content: $("#dssz").html(),//这里content是一个普通的String
+                  btn: ['保存定时设置'],
+                  success: function(layero, index){
+                      var lxVal = $("#lx").val();
+                      //alert(data.quartzJson);
+                      if(data.quartzJson != "" &&  data.quartzJson != null &&  data.quartzJson != undefined){
+                          var objJson = JSON.parse(data.quartzJson);
+                          var objLx = objJson.lx;
+                          changeZqlx(objLx)
+                          for(var key in objJson){
+                              $("#"+key).val(objJson[key])
+                          }
+                      }else{
+                          changeZqlx(lxVal)
+                      }
+                  },yes: function(index2, layero){
+                      var index_load = layer.load(1);
+                      var formJson = wn.serializeObject($('#dsszForm'));
+                      formJson.id = data.id;
+                      $.ajax({
+                          url: 'kfj/saveDssz.kt',
+                          type: 'POST',
+                          dataType: 'json',
+                          data: formJson
+                      }).done(function (dataRe) {
+                          layer.close(index_load);
+                          if(dataRe.ResultCode == '1'){
+                              layer.msg(dataRe.Content, {icon: 1});
+                              data.quartzJson =JSON.stringify(wn.serializeObject($('#dsszForm'))) ;
+                              resultTable.bootstrapTable('updateRow', {index: index, row: data});
+                              $("#data_tables").find("tbody>tr").eq(index).addClass("success")
+                              layer.close(index2);
+                          }else{
+                              layer.msg(dataRe.Content, {icon: 5});
+                          }
+                      }).fail(function () {
+                      }).always(function () {
+                      });
+                  }
+              })
+          }else{
+              layer.msg('请选取一条任务！', {icon: 5});
+          }
+      })
+
+
+
+      $("#ckrz").click(function () {
+          var index =  resultTable.find('tr.success').data('index');//获得选中的行的id
+          if(index != null){
+              var data2 =resultTable.bootstrapTable('getData', true);
+              var data = data2[index];
+              layer.open({
+                  title: '查看日志',
+                  type: 1,
+                  area: ['1000px', '600px'],
+                  content: $("#getLogs").html(),//这里content是一个普通的String
+                  success: function(layero, index){
+
+                       $.ajax({
+                          url: 'kfj/getLogs.kt',
+                          type: 'POST',
+                          dataType: 'json',
+                          data: {id: data.id},
+                          success: function(data, textStatus, xhr) {
+                                    $("#seeLogs").html(data.Content);
+                                    var ht = document.getElementById("seeLogs").scrollHeight
+                                    $("#seeLogs").scrollTop(ht);
+                          }
+                        });
+                  }
+              })
+          }else{
+              layer.msg('请选取一条任务！', {icon: 5});
+          }
+      })
+
+      $("#yxyc").click(function () {
+           var index =  resultTable.find('tr.success').data('index');//获得选中的行的id
+            if(index != null){
+                var data2 =resultTable.bootstrapTable('getData', true);
+                var data = data2[index];
+                if( data.status == "2"){
+                    layer.msg('作业正在运行，请先停用任务！', {icon: 5});
+                    return;
+                }
+                data.status = "2";
+                resultTable.bootstrapTable('updateRow', {index: index, row: data});
+                var index_load = layer.load(1);
+                //console.log(data[index]);
+                 $.ajax({
+                    url: 'kfj/renJob.kt',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {jobPath: data.jobPath,id:data.id},
+                    complete: function(xhr, textStatus) {
+                        layer.close(index_load);
+                    },
+                    success: function(data, textStatus, xhr) {
+                        layer.close(index_load);
+                        data.status = "1";
+                        resultTable.bootstrapTable('updateRow', {index: index, row: data});
+                        $("#data_tables").find("tbody>tr").eq(index).addClass("success")
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        layer.close(index_load);
+                    }
+                  });
+            }else{
+                layer.msg('请选取一条任务！', {icon: 5});
+            }
+      })
+
+
+      $("#addJob").click(function () {
+          layer.open({
+              title: '新增作业',
+              type: 1,
+              area: ['1000px', '600px'],
+              content: $("#popContent").html()//这里content是一个普通的String
+              ,btn: ['保存作业']
+              ,yes: function(index, layero){
+                  var index_load = layer.load(1);
+                   if($("#jobName").val().trim() == ""){
+                       layer.msg('作业名称必填！', {icon: 5});
+                       layer.close(index_load)
+                       return;
+                   }
+                  if($("#jobDetail").val().trim() == ""){
+                      layer.msg('作业描述必填！', {icon: 5});
+                      layer.close(index_load)
+                      return;
+                  }
+                  if($("#zylj").val().trim() == ""){
+                      layer.msg('请勾选作业路径！', {icon: 5});
+                      layer.close(index_load)
+                      return;
+                  }
+                   $.ajax({
+                      url: 'kfj/saveKfj.kt',
+                      type: 'POST',
+                      dataType: 'json',
+                      data: {jobName: $("#jobName").val().trim(),jobDetail:$("#jobDetail").val().trim(),jobPath:$("#zylj").val().trim()},
+                      success: function(data, textStatus, xhr) {
+                          layer.close(index_load)
+                          if(data.ResultCode == '1'){
+                              layer.msg(data.Content, {icon: 1});
+                              queryJobs();
+                              layer.close(index);
+                          }else{
+                              layer.msg(data.Content, {icon: 5});
+                          }
+                      },
+                      error: function(xhr, textStatus, errorThrown) {
+                          layer.msg("后台异常！", {icon: 5});
+                          layer.close(index_load)
+                      }
+                    });
+              }
+          });
+      })
+
+      resultTable = $('#data_tables').bootstrapTable('destroy').bootstrapTable({
+          columns: [
+              {
+                  field : 'id',
+                  title: '作业ID',
+              },
+              {
+                  field : 'jobName',
+                  title: '作业名称',
+              },
+              {
+                  field : 'jobDetail',
+                  title: '作业描述',
+              },
+              {
+                  field : 'jobPath',
+                  title: '作业路径',
+              },
+              {
+                  field : 'status',
+                  title: '作业状态',
+                  formatter:function (value1, row, index, field)  {
+                      if(value1 == '1'){
+                          return "停用中";
+                      }else if(value1 == '2'){
+                          return "<span style='color: red;'>运行中</span>";
+                      }
+                  }
+              },{
+                  field : 'createTime',
+                  title: '创建时间',
+              }
+          ],
+          showFooter:false,
+          search:false,
+          striped:false,
+          height: 450,
+          showExport: false,  //是否显示导出按钮
+          pagination : true, //启动分页
+          pageSize : 20, //每页显示的记录数
+          pageList : [20,'All'], //记录数可选列表
+          onlyInfoPagination : false,
+          sidePagination : "local",
+          onLoadSuccess: function () {
+
+          }
+      });
+      resultTable.on('click-row.bs.table', function (e, row, element){
+          $('.success').removeClass('success');//去除之前选中的行的，选中样式
+          $(element).addClass('success');//添加当前选中的 success样式用于区别
+          resultTable.find('tr.success').data('index');//获得选中的行的id
+      });
+      queryJobs();
+  })
+
+
+
+  function queryJobs() {
+      var index_load = layer.load(1);
+      $.ajax({
+          url: 'kfj/queryKfj.kt',
+          type: 'POST',
+          dataType: 'json',
+          data: wn.serializeObject($('#defaultForm2'))
+      }).done(function (resultDatas) {
+          if(resultDatas.ResultCode == '1'){
+              layer.close(index_load);
+              resultTable.bootstrapTable("load", resultDatas.Content);
+          }else{
+              layer.msg(resultDatas.Content, {icon: 5});
+          }
+      }).fail(function () {
+      }).always(function () {
+      });
+  }
+
+  
+  function getKettleFile() {
+          layer.open({
+              title: '选取KETTLE文件',
+              type: 1,
+              area: ['800px', '500px'],
+              content: $("#getKettleFileTree").html(),//这里content是一个普通的String
+              success: function(layero, index){
+                  $("#kettleFileTree").tree({
+                      url: "kft/kft.kt",
+                      method:"get",
+                      parentField:"pid",
+                      checkbox: false,
+                      onDblClick: function (node) {
+                      },
+                      onSelect: function (node) {
+                      }, onLoadSuccess: function () {
+                      }
+                  });
+              }
+              ,btn: ['确定']
+              ,yes: function(index, layero){
+                  //按钮【按钮一】的回调
+                  var node = $('#kettleFileTree').tree('getSelected');
+                  if (node){
+                      if(node.text.indexOf(".kjb") != -1 || node.text.indexOf(".ktr") != -1 ){
+                          $("#zylj").val(node.id);
+                          layer.close(index);
+                      }else{
+                          layer.msg('请选择具体的文件！', {icon: 5});
+                      }
+                  }else{
+                      layer.msg('请勾选文件！', {icon: 5});
+                  }
+              }
+          });
+  }
+
+
+</script>
+</body>
+</html>

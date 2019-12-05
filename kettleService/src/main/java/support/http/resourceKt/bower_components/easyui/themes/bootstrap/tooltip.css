@@ -1,0 +1,100 @@
+.tooltip2 {
+  position: absolute;
+  display: none;
+  z-index: 9900000;
+  outline: none;
+  opacity: 1;
+  filter: alpha(opacity=100);
+  padding: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+.tooltip2-content {
+  font-size: 12px;
+}
+.tooltip2-arrow-outer,
+.tooltip2-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  border-style: solid;
+  border-width: 6px;
+  border-color: transparent;
+  _border-color: tomato;
+  _filter: chroma(color=tomato);
+}
+.tooltip2-right .tooltip2-arrow-outer {
+  left: 0;
+  top: 50%;
+  margin: -6px 0 0 -13px;
+}
+.tooltip2-right .tooltip2-arrow {
+  left: 0;
+  top: 50%;
+  margin: -6px 0 0 -12px;
+}
+.tooltip2-left .tooltip2-arrow-outer {
+  right: 0;
+  top: 50%;
+  margin: -6px -13px 0 0;
+}
+.tooltip2-left .tooltip2-arrow {
+  right: 0;
+  top: 50%;
+  margin: -6px -12px 0 0;
+}
+.tooltip2-top .tooltip2-arrow-outer {
+  bottom: 0;
+  left: 50%;
+  margin: 0 0 -13px -6px;
+}
+.tooltip2-top .tooltip2-arrow {
+  bottom: 0;
+  left: 50%;
+  margin: 0 0 -12px -6px;
+}
+.tooltip2-bottom .tooltip2-arrow-outer {
+  top: 0;
+  left: 50%;
+  margin: -13px 0 0 -6px;
+}
+.tooltip2-bottom .tooltip2-arrow {
+  top: 0;
+  left: 50%;
+  margin: -12px 0 0 -6px;
+}
+.tooltip2 {
+  background-color: #ffffff;
+  border-color: #D4D4D4;
+  color: #333;
+}
+.tooltip2-right .tooltip2-arrow-outer {
+  border-right-color: #D4D4D4;
+}
+.tooltip2-right .tooltip2-arrow {
+  border-right-color: #ffffff;
+}
+.tooltip2-left .tooltip2-arrow-outer {
+  border-left-color: #D4D4D4;
+}
+.tooltip2-left .tooltip2-arrow {
+  border-left-color: #ffffff;
+}
+.tooltip2-top .tooltip2-arrow-outer {
+  border-top-color: #D4D4D4;
+}
+.tooltip2-top .tooltip2-arrow {
+  border-top-color: #ffffff;
+}
+.tooltip2-bottom .tooltip2-arrow-outer {
+  border-bottom-color: #D4D4D4;
+}
+.tooltip2-bottom .tooltip2-arrow {
+  border-bottom-color: #ffffff;
+}

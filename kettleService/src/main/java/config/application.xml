@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <import resource="config/controller/controller.xml"/>
+    <import resource="config/service/service.xml"/>
+
+</beans>
